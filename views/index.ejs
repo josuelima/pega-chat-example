@@ -1,0 +1,30 @@
+<html>
+  <header>
+    <title>My Widget Example</title>
+  </header>
+  <body>
+    <h1>Pega Widget Example</h1>
+
+    <!-- ADD PEGA WEB MESSAGING WIDGET -->
+    <script id="pega-wm-chat"
+      src="https://widget.use1dev.chat.pega.digital/775f9c82-63bf-4864-9367-465c6fa8e36a/widget.js"></script>
+
+    <!-- HOOK CALLBACK EVENT FROM WIDGET TO LOCAL FUNCTION -->
+    <script type="text/javascript">
+      if (typeof PegaUnifiedChatWidget === "undefined") {
+        var PegaUnifiedChatWidget = {}
+      }
+
+      // This callback will be invoked every time a new chat session is started
+      PegaUnifiedChatWidget.onSessionInitialized = (sessionId) => {
+        console.log("Chat session started. Session ID", sessionId);
+
+        // Custom logic to send the session Id to the backend and transmit private data
+        var request = new XMLHttpRequest();
+        request.open('POST', '/private-data', true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send('sessionId=' + sessionId);
+      }
+    </script>
+  </body>
+</html>
