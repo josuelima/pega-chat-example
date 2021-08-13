@@ -18,13 +18,15 @@
      * This callback will be invoked when the customer clicks on the chat bubble
      * It should return a valid chat session id
      */
-    PegaUnifiedChatWidget.onCreateSessionRequest = async () => {
+    PegaUnifiedChatWidget.onCreateSessionRequest = () => {
       /**
        * Send request to the backend to issue a new chat session using Digital Messaging Service API
        * Clients can add/rely on their own authentication
        */
-      var response = await fetch('/create-chat-session');
-      return await response.text();
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/create-chat-session", false);
+      xhr.send(null);
+      return xhr.responseText;
     }
   </script>
 </body>
