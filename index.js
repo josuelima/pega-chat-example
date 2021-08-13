@@ -30,7 +30,7 @@ app.get('/create-chat-session', async function (_, res) {
         authorization: 'Bearer ' + token
       }
     },
-  ).promise();
+  );
 
   res.send(response.sessionId);
 });
