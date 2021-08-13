@@ -32,7 +32,7 @@ app.get('/create-chat-session', async function (_, res) {
     },
   );
 
-  res.send(response.data);
+  res.send(response.data.sessionId);
 });
 
 app.listen(PORT)
