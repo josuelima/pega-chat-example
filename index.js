@@ -2,30 +2,31 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
-// const fetch = require('node-fetch')
+const fetch = require('node-fetch')
 
 const PORT = process.env.PORT || 5000
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', function (req, res) {
+app.get('/', function (_, res) {
   res.render('index')
 })
 
-app.get('/create-chat-session', function (req, res) {
-  // Securely send private data to Chat session
-  // Any JSON payload can be sent
-  const token = jwt.sign({ iss: req.body.sessionId }, process.env.JWT_SECRET);
+app.get('/create-chat-session', async function (_, res) {
+  /**
+   * Securely request a new chat session
+   */
+  const token = jwt.sign({ iss: process.env.WIDGET_ID }, process.env.JWT_SECRET);
 
-  // fetch('https://widget.use1dev.chat.pega.digital/private-data', {
-  //   method: 'POST',
-  //   body: JSON.stringify(privateData),
-  //   headers: { 'Content-Type': 'application/json', 'authorization': 'Bearer ' + token },
-  // });
+  const response = await fetch('https://widget.sandbox.chat.pega.digital/create', {
+    method: 'POST',
+    body: JSON.stringify({ customerId: 'currently_logged_user_id' }),
+    headers: { 'Content-Type': 'application/json', 'authorization': 'Bearer ' + token },
+  });
 
-  // res.sendStatus(200)
-  res.send("session-123")
+  const data = await response.json();
+  res.send(data.sessionId);
 });
 
 app.listen(PORT)

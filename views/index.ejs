@@ -25,8 +25,8 @@
        * Send request to the backend to issue a new chat session using Digital Messaging Service API
        * Clients can add their own authentication on top of this request
        */
-      var response = await fetch('/create-chat-session').then(response => response.text());
-      console.log(response);
+      var sessionId = await fetch('/create-chat-session').then(response => response.text());
+      return sessionId;
     }
   </script>
 </body>
