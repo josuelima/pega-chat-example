@@ -1,30 +1,34 @@
 <html>
-  <header>
-    <title>My Widget Example</title>
-  </header>
-  <body>
-    <h1>Pega Widget Example</h1>
+<header>
+  <title>My Widget Example</title>
+</header>
 
-    <!-- ADD PEGA WEB MESSAGING WIDGET -->
-    <script id="pega-wm-chat"
-      src="https://widget.use1.chat.pega.digital/b3781c4d-d5bb-4716-bfec-4c7edcf03b5c/widget.js"></script>
+<body>
+  <h1>Pega Widget Example</h1>
 
-    <!-- HOOK CALLBACK EVENT FROM WIDGET TO LOCAL FUNCTION -->
-    <script type="text/javascript">
-      if (typeof PegaUnifiedChatWidget === "undefined") {
-        var PegaUnifiedChatWidget = {}
-      }
+  <!-- ADD PEGA WEB MESSAGING WIDGET -->
+  <script id="pega-wm-chat"
+    src="https://widget.sandbox.chat.pega.digital/b7daf3f9-0ae7-451b-a308-a74c33077b35/widget.js"></script>
 
-      // This callback will be invoked every time a new chat session is started
-      PegaUnifiedChatWidget.onSessionInitialized = (sessionId) => {
-        console.log("Chat session started. Session ID", sessionId);
+  <!-- HOOK CALLBACK EVENT FROM WIDGET TO LOCAL FUNCTION -->
+  <script type="text/javascript">
+    if (typeof PegaUnifiedChatWidget === "undefined") {
+      var PegaUnifiedChatWidget = {}
+    }
 
-        // Custom logic to send the session Id to the backend and transmit private data
-        var request = new XMLHttpRequest();
-        request.open('POST', '/private-data', true);
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send('sessionId=' + sessionId);
-      }
-    </script>
-  </body>
+    /**
+     * This callback will be invoked when the customer clicks on the chat bubble
+     * It should return a valid chat session id
+     */
+    PegaUnifiedChatWidget.onCreateSessionRequest = () => {
+      /**
+       * Send request to the backend to issue a new chat session using Digital Messaging Service API
+       * Clients can add their own authentication on top of this request
+       */
+      var sessionId = fetch('/create-chat-session').then(response => response);
+      console.log(sessionId);
+    }
+  </script>
+</body>
+
 </html>
