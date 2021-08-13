@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
-const fetch = require('node-fetch')
+const axios = require('axios')
 
 const PORT = process.env.PORT || 5000
 
