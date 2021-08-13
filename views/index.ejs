@@ -4,8 +4,6 @@
 </header>
 
 <body>
-  <h1>Pega Widget Example</h1>
-
   <!-- ADD PEGA WEB MESSAGING WIDGET -->
   <script id="pega-wm-chat"
     src="https://widget.sandbox.chat.pega.digital/b7daf3f9-0ae7-451b-a308-a74c33077b35/widget.js"></script>
@@ -23,10 +21,12 @@
     PegaUnifiedChatWidget.onCreateSessionRequest = () => {
       /**
        * Send request to the backend to issue a new chat session using Digital Messaging Service API
-       * Clients can add their own authentication on top of this request
+       * Clients can add/rely on their own authentication
        */
-      var sessionId = fetch('/create-chat-session').then(response => response);
-      console.log(sessionId);
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/create-chat-session", false);
+      xhr.send(null);
+      return xhr.responseText;
     }
   </script>
 </body>
