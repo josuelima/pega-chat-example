@@ -24,9 +24,7 @@
        * Clients can add/rely on their own authentication
        */
       var response = await fetch('/create-chat-session');
-      var sessionId = await response.text();
-
-      return sessionId;
+      return await response.text();
     }
   </script>
 </body>
