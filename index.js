@@ -19,7 +19,7 @@ app.get('/create-chat-session', async function (_, res) {
    */
   const token = jwt.sign({ iss: process.env.WIDGET_ID }, process.env.JWT_SECRET);
 
-  const response = await fetch('https://widget.sandbox.chat.pega.digital/create', {
+  const response = await fetch(`https://widget.sandbox.chat.pega.digital/${process.env.WIDGET_ID}/create`, {
     method: 'POST',
     body: JSON.stringify({ customerId: 'currently_logged_user_id' }),
     headers: { 'Content-Type': 'application/json', 'authorization': 'Bearer ' + token },
