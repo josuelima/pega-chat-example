@@ -21,9 +21,11 @@
     PegaUnifiedChatWidget.onCreateSessionRequest = async () => {
       /**
        * Send request to the backend to issue a new chat session using Digital Messaging Service API
-       * Clients can add their own authentication on top of this request
+       * Clients can add/rely on their own authentication
        */
-      var sessionId = await fetch('/create-chat-session').then(response => response.text());
+      var response = await fetch('/create-chat-session');
+      var sessionId = await response.text();
+
       return sessionId;
     }
   </script>
